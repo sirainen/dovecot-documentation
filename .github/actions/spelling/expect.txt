@@ -468,7 +468,6 @@ gssapi
 gui
 GVy
 gzip
-hacluster
 halon
 haproxy
 hara
