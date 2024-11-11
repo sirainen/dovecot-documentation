@@ -53,7 +53,12 @@ Filters can accept parameters, both positional and named. E.g. `%{literal('\r\n\
 to CR LF. `%{user | substr(0, 1)}` will take first character of username. Example of named parameters
 would be `%{user | md5(rounds=1000,salt='pepper')}`
 
-You can use `%%{variable}` to escape this, and emit `%{variable}`.
+For escaping:
+ * `%%{` emits `%{`
+ * `%%%{` emits `%%{`
+ * `%{concat('%', user)}` emits `%user@domain`, assuming `%{user}` variable 
+   expands to `user@domain`.
+ * Otherwise `%` doesn't need any escaping. `%%` emits the same `%%`.
 
 Filters accept strings, numbers and variables as parameters. Parameters can be positional or
 named key-value pairs. Key names cannot be variables.
