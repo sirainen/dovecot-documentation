@@ -199,7 +199,7 @@ export const updates = {
 	settings_service_reuse_port_added: '2.4.4',
 	settings_service_type_client_added: '2.4.5',
 	settings_shutdown_clients_removed: '2.4.5',
-	settings_shutdown_clients_timeout_added: '2.4.5',
+	settings_service_shutdown_clients_timeout_added: '2.4.5',
 	settings_sieve_max_cpu_time_changed: '2.4.5',
 	settings_sieve_notify_mailto_max_headers_added: '2.4.5',
 	settings_sieve_notify_mailto_max_recipients_added: '2.4.5',

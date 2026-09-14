@@ -2640,7 +2640,7 @@ returned.`,
 				example: '4h',
 				type: doveadm_arg_types.STRING,
 				text: `
-Override [[setting,shutdown_clients_timeout]] for this reload: how long the
+Override [[setting,service_shutdown_clients_timeout]] for this reload: how long the
 processes of the old configuration may keep serving their existing clients.
 \`0\` disconnects them immediately, \`infinite\` keeps them until the
 clients disconnect.`,
@@ -2711,7 +2711,7 @@ clients disconnect.`,
 				type: doveadm_arg_types.BOOL,
 				text: `
 List also the services of the older configuration generations, which are still
-around because of [[setting,shutdown_clients_timeout]]. Each service is then
+around because of [[setting,service_shutdown_clients_timeout]]. Each service is then
 listed once per generation.`,
 			},
 			service: {

@@ -10500,14 +10500,14 @@ imap-urlauth, imap-urlauth-worker, doveadm and managesieve).`
 		},
 		tags: [ 'service' ],
 		values: setting_types.STRING,
-		seealso: [ 'service_process_limit', 'shutdown_clients_timeout' ],
+		seealso: [ 'service_process_limit', 'service_shutdown_clients_timeout' ],
 		text: `
 Type of this service:
 
 | Value | Description |
 | --- | --- |
 | \`<empty>\` | The default. |
-| \`client\` | Used by services whose processes serve externally visible client connections that can't be transparently re-established. A configuration reload preserves these processes, see [[setting,shutdown_clients_timeout]]. |
+| \`client\` | Used by services whose processes serve externally visible client connections that can't be transparently re-established. A configuration reload preserves these processes, see [[setting,service_shutdown_clients_timeout]]. |
 | \`login\` | Used by login services. The login processes have "all processes full" notification fd. It's used by the processes to figure out when no more client connections can be accepted because client and process limits have been reached. The login processes can then kill some of their oldest connections that haven't logged in yet. |
 | \`worker\` | Used by various worker services. It's normal for worker processes to fill up to [[setting,service_process_limit]], and there shouldn't be a warning logged about it. |
 | \`startup\` | Creates one process at startup. |
@@ -10724,7 +10724,7 @@ low. Use \`unlimited\` to disable this entirely.`
 	shutdown_clients: {
 		removed: {
 			settings_shutdown_clients_removed: `
-Replaced by [[setting,shutdown_clients_timeout]], which is the same setting
+Replaced by [[setting,service_shutdown_clients_timeout]], which is the same setting
 with the time in between also available: \`yes\` became \`0\` and \`no\`
 became \`infinite\`.`
 		},
@@ -10738,10 +10738,11 @@ interrupt earlier sessions, but may not be desirable if restarting Dovecot
 to apply a security update, for example.`
 	},
 
-	shutdown_clients_timeout: {
+	service_shutdown_clients_timeout: {
 		added: {
-			settings_shutdown_clients_timeout_added: false
+			settings_service_shutdown_clients_timeout_added: false
 		},
+		tags: [ 'service' ],
 		default: '0',
 		seealso: [ 'service_type' ],
 		values: setting_types.TIME,
@@ -10768,14 +10769,14 @@ The main use case is taking new SSL certificates into use without
 disconnecting anyone:
 
 \`\`\`
-shutdown_clients_timeout = 4h
+service_shutdown_clients_timeout = 4h
 \`\`\`
 
 The setting can also be set per service, e.g. to keep only the IMAP sessions
 running:
 
 \`\`\`
-shutdown_clients_timeout = 0
+service_shutdown_clients_timeout = 0
 service imap {
   shutdown_clients_timeout = 4h
 }

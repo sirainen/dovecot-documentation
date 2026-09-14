@@ -62,7 +62,7 @@ the current configuration generation, containing the following details:
 *generation*
 :   the configuration generation the service belongs to. This increases by one
     for every reload, so services preserved from before a reload (see
-    [[setting,shutdown_clients_timeout]]) have a smaller number than the
+    [[setting,service_shutdown_clients_timeout]]) have a smaller number than the
     current one.
 
 *kill_time*
@@ -76,7 +76,7 @@ the current configuration generation, containing the following details:
 
 **-a**, **--all-generations**
 :   List also the services of the older configuration generations, which are
-    still around because of [[setting,shutdown_clients_timeout]]. Each service
+    still around because of [[setting,service_shutdown_clients_timeout]]. Each service
     is then listed once per generation.
 
 ## ARGUMENTS

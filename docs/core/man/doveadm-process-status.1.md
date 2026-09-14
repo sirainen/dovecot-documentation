@@ -39,7 +39,7 @@ containing the following details:
 *generation*
 :   the configuration generation the process belongs to. This increases by one
     for every reload, so processes preserved from before a reload (see
-    [[setting,shutdown_clients_timeout]]) have a smaller number than the
+    [[setting,service_shutdown_clients_timeout]]) have a smaller number than the
     current one.
 
 *kill_time*
