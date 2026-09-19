@@ -34,7 +34,9 @@ should be used to prune the mailbox to control storage usage.
 
 ### Storage Location
 
-Messages that are expunged are moved to a single mailbox.
+Messages that are expunged are moved to a single mailbox. The mailbox can
+also be selected per folder, see
+[below](#separate-mailbox-for-each-folder).
 
 The mailbox is created automatically.
 
@@ -80,6 +82,54 @@ mailbox .EXPUNGED {
 
 You could also leave the permissions empty if you don't want to allow clients
 to access it at all.
+
+### Separate Mailbox for Each Folder
+
+[[setting,lazy_expunge_mailbox]] is looked up separately for each folder that
+mails are expunged from, and it supports [[link,settings_variables]]. The
+`%{event:mailbox}` variable expands to the name of that folder, so the
+expunged mails can be kept in a separate mailbox for each folder:
+
+::: code-group
+
+```doveconf[dovecot.conf]
+lazy_expunge_mailbox = .EXPUNGED/%{event:mailbox}
+
+namespace inbox {
+  # Mails expunged from the lazy-expunge mailboxes must not be moved again,
+  # or they would end up in .EXPUNGED/.EXPUNGED/...
+  mailbox .EXPUNGED {
+    lazy_expunge_mailbox =
+  }
+  mailbox ".EXPUNGED/*" {
+    lazy_expunge_mailbox =
+  }
+}
+
+mailbox ".EXPUNGED/*" {
+  autoexpunge = 7days
+  quota_ignore = yes
+}
+```
+
+:::
+
+With this configuration a mail expunged from the `Archive/2024` folder is
+moved to `.EXPUNGED/Archive/2024`, which is created automatically. The
+variable expands to the folder name as the user sees it, including the
+namespace prefix and using the namespace's
+[[setting,namespace_separator]].
+
+::: warning
+The mails are moved to the destination mailbox that exists when the mail is
+expunged. Renaming a folder does not rename its lazy-expunge mailbox, so the
+expunged mails of a renamed folder stay in the old mailbox.
+:::
+
+[[added,lazy_expunge_mailbox_virtual_added]] Expunging mails via a
+[[plugin,virtual]] mailbox uses the setting of the folder the mail is
+physically in. Older versions stored all the mails of such an expunge in the
+same mailbox, and could store them twice.
 
 ### Copy Only the Last Instance
 
